@@ -10,24 +10,30 @@ module.exports = {
     extend: {
       fontFamily: {
         serif: ["'Playfair Display'", "Georgia", "serif"],
-        sans: ["'DM Sans'", "system-ui", "sans-serif"],
-        mono: ["'JetBrains Mono'", "monospace"],
+        sans:  ["'DM Sans'", "system-ui", "sans-serif"],
+        mono:  ["'JetBrains Mono'", "monospace"],
       },
       colors: {
         accent: {
           DEFAULT: "#e85d04",
-          dark: "#c44d03",
-          light: "#fb8c00",
+          dark:    "#c44d03",
+          light:   "#fff0e6",
         },
         ink: {
-          DEFAULT: "#1a1a1a",
-          muted: "#4a4a4a",
-          subtle: "#8a8a8a",
+          DEFAULT: "#111827",
+          muted:   "#374151",
+          subtle:  "#6b7280",
+          faint:   "#9ca3af",
         },
         paper: {
-          DEFAULT: "#faf9f6",
-          warm: "#f5f0e8",
-          cold: "#f0f4f8",
+          DEFAULT: "#fafaf8",
+          warm:    "#f5f1eb",
+          mid:     "#ede9e2",
+          cold:    "#f0f4f8",
+        },
+        border: {
+          DEFAULT: "#e5e0d8",
+          strong:  "#d0cac0",
         },
       },
       typography: (theme) => ({
@@ -46,7 +52,7 @@ module.exports = {
             },
             code: {
               fontFamily: theme("fontFamily.mono").join(", "),
-              backgroundColor: "#f4f4f4",
+              backgroundColor: "#f5f1eb",
               padding: "0.2em 0.4em",
               borderRadius: "4px",
               fontSize: "0.875em",
