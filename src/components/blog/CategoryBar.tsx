@@ -8,7 +8,7 @@ interface Props {
 }
 
 export function CategoryBar({ categories }: Props) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   return (
     <div className="flex items-center gap-2 mb-10 overflow-x-auto pb-2">

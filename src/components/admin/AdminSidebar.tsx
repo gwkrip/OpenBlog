@@ -37,7 +37,7 @@ const navGroups = [
 ];
 
 export function AdminSidebar({ user }: Props) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   const isActive = (href: string, exact?: boolean) =>
     exact ? pathname === href : pathname.startsWith(href) && href !== "/admin";
