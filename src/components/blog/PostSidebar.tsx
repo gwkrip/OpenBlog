@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Share2, Twitter, Link2 } from "lucide-react";
+import { Share2 } from "lucide-react";
+import { ShareButtons } from "./ShareButtons";
 import type { PostWithRelations } from "@/types";
 
 interface Props {
@@ -42,24 +43,7 @@ export function PostSidebar({ post }: Props) {
           <Share2 size={14} className="text-ink-subtle" />
           <h3 className="text-xs font-medium uppercase tracking-widest text-ink-subtle">Share</h3>
         </div>
-        <div className="flex flex-col gap-2">
-          <a
-            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(post.title)}`}
-            target="_blank"
-            rel="noopener"
-            className="btn-ghost justify-start text-sm"
-          >
-            <Twitter size={14} />
-            Share on Twitter
-          </a>
-          <button
-            onClick={() => navigator.clipboard.writeText(postUrl)}
-            className="btn-ghost justify-start text-sm"
-          >
-            <Link2 size={14} />
-            Copy link
-          </button>
-        </div>
+        <ShareButtons url={postUrl} title={post.title} />
       </div>
 
       {post.tags.length > 0 && (
