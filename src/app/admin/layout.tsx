@@ -9,11 +9,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if ((session.user as any).role === "user") redirect("/");
 
   return (
-    <div className="min-h-screen bg-[#f8f7f4] flex">
+    <div className="min-h-screen bg-[var(--paper)] flex">
       <AdminSidebar user={session.user} />
       <div className="flex-1 flex flex-col min-w-0">
         <AdminHeader user={session.user} />
-        <main className="flex-1 p-6 md:p-8 overflow-auto">{children}</main>
+        <main className="flex-1 overflow-auto">
+          {children}
+        </main>
       </div>
     </div>
   );

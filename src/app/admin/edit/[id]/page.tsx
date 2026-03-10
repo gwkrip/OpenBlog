@@ -18,5 +18,9 @@ export default async function EditPostPage({ params }: Props) {
 
   if (!post) notFound();
 
-  return <PostEditor post={post} categories={categories} />;
+  return (
+    <div className="h-full">
+      <PostEditor post={post} categories={categories} />
+    </div>
+  );
 }

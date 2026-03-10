@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
-import { Clock, Eye } from "lucide-react";
+import { Clock, Eye, ArrowRight } from "lucide-react";
 import type { PostWithRelations } from "@/types";
 
 interface Props {
@@ -10,8 +10,9 @@ interface Props {
 
 export function HeroPost({ post }: Props) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 card overflow-hidden group">
-      <div className="relative overflow-hidden bg-paper-warm aspect-[4/3] lg:aspect-auto">
+    <div className="group relative overflow-hidden rounded-xl">
+      {/* Background image */}
+      <div className="relative aspect-[21/9] min-h-[380px] max-h-[520px] bg-[var(--paper-warm)]">
         {post.coverImage ? (
           <Image
             src={post.coverImage}
@@ -19,41 +20,47 @@ export function HeroPost({ post }: Props) {
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-105"
             priority
+            sizes="100vw"
           />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-paper-warm to-[var(--border)] flex items-center justify-center">
-            <span className="font-serif text-8xl font-black text-[var(--border)] select-none">
-              {post.title.charAt(0)}
-            </span>
-          </div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--ink)] via-[var(--ink-muted)] to-[var(--ink-subtle)]" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/20 to-transparent" />
+        {/* Dark gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/40 to-transparent" />
       </div>
 
-      <div className="p-8 md:p-12 flex flex-col justify-center bg-white">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="badge bg-accent text-white">Featured</span>
+      {/* Content overlay */}
+      <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10">
+        {/* Badges */}
+        <div className="flex items-center gap-2 mb-4">
+          <span className="badge badge-featured text-[10px]">Featured</span>
           {post.categories[0] && (
             <Link
               href={`/categories/${post.categories[0].slug}`}
-              className="badge text-ink-subtle bg-paper-warm hover:bg-accent hover:text-white transition-colors"
+              className="badge bg-white/15 text-white backdrop-blur-sm hover:bg-white/25 transition-colors text-[10px]"
             >
               {post.categories[0].name}
             </Link>
           )}
         </div>
 
-        <Link href={`/blog/${post.slug}`} className="block mb-4 group/title">
-          <h1 className="heading-display text-3xl md:text-4xl text-balance group-hover/title:text-accent transition-colors leading-tight">
+        {/* Title */}
+        <Link href={`/blog/${post.slug}`} className="block mb-3">
+          <h1 className="heading-display text-2xl md:text-4xl lg:text-5xl text-white text-balance leading-tight group-hover:text-accent transition-colors duration-300 max-w-3xl">
             {post.title}
           </h1>
         </Link>
 
+        {/* Excerpt */}
         {post.excerpt && (
-          <p className="text-ink-muted leading-relaxed mb-6 line-clamp-3">{post.excerpt}</p>
+          <p className="text-sm md:text-base text-white/70 line-clamp-2 max-w-2xl mb-5 leading-relaxed hidden sm:block">
+            {post.excerpt}
+          </p>
         )}
 
-        <div className="flex items-center justify-between mt-auto">
+        {/* Footer */}
+        <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3">
             {post.author.image ? (
               <Image
@@ -61,30 +68,39 @@ export function HeroPost({ post }: Props) {
                 alt={post.author.name || ""}
                 width={36}
                 height={36}
-                className="rounded-full object-cover"
+                className="rounded-full object-cover border-2 border-white/20"
               />
             ) : (
-              <div className="w-9 h-9 rounded-full bg-paper-warm flex items-center justify-center text-xs font-bold text-ink-muted">
+              <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-xs font-bold text-white border border-white/20">
                 {post.author.name?.charAt(0).toUpperCase()}
               </div>
             )}
             <div>
-              <p className="text-sm font-medium text-ink">{post.author.name}</p>
-              <p className="text-xs text-ink-subtle">
+              <p className="text-sm font-semibold text-white">{post.author.name}</p>
+              <p className="text-xs text-white/60">
                 {post.publishedAt ? formatDate(post.publishedAt) : formatDate(post.createdAt)}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-ink-subtle">
-            <span className="flex items-center gap-1.5">
-              <Clock size={13} />
-              {post.readingTime} min
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Eye size={13} />
-              {post.views}
-            </span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 text-xs text-white/60">
+              <span className="flex items-center gap-1.5">
+                <Clock size={12} />
+                {post.readingTime} min read
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Eye size={12} />
+                {post.views.toLocaleString()}
+              </span>
+            </div>
+            <Link
+              href={`/blog/${post.slug}`}
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-white text-ink text-sm font-semibold rounded-md hover:bg-accent hover:text-white transition-all duration-200"
+            >
+              Read More
+              <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </div>

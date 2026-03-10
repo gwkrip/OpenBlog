@@ -6,5 +6,9 @@ export const metadata: Metadata = { title: "New Post - Admin" };
 
 export default async function NewPostPage() {
   const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });
-  return <PostEditor categories={categories} />;
+  return (
+    <div className="h-full">
+      <PostEditor categories={categories} />
+    </div>
+  );
 }
